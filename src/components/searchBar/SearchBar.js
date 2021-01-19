@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import HeaderStyled from './SearchBarStyled';
 const SearchBar = ({ onSubmit }) => {
   const [query, setQuery] = useState('');
   const onFormSubmit = e => {
@@ -9,7 +10,7 @@ const SearchBar = ({ onSubmit }) => {
     setQuery(e.target.value);
   };
   return (
-    <header className="Searchbar">
+    <HeaderStyled className="Searchbar">
       <form className="SearchForm" onSubmit={onFormSubmit}>
         <button type="submit" className="SearchForm-button">
           <span className="SearchForm-button-label">Search</span>
@@ -25,7 +26,7 @@ const SearchBar = ({ onSubmit }) => {
           value={query}
         />
       </form>
-    </header>
+    </HeaderStyled>
   );
 };
 

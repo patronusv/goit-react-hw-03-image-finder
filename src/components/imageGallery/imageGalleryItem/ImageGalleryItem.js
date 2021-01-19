@@ -1,9 +1,10 @@
 import React from 'react';
+import ImageListItem from './ImageGalleryItemStyled';
 const ImageGalleryItem = ({ image }) => {
   return (
-    <li className="ImageGalleryItem">
+    <ImageListItem className="ImageGalleryItem">
       <img src={image.webformatURL} alt={image.tags} data-largeimageurl={image.largeImageURL} className="ImageGalleryItem-image" />
-    </li>
+    </ImageListItem>
   );
 };
 

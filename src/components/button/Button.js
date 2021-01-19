@@ -1,9 +1,12 @@
 import React from 'react';
+import ButtonWrapper from './ButtonStyled';
 const Button = ({ onBtnClick, title }) => {
   return (
-    <button onClick={onBtnClick} className="Button">
-      {title}
-    </button>
+    <ButtonWrapper>
+      <button onClick={onBtnClick} className="Button">
+        {title}
+      </button>
+    </ButtonWrapper>
   );
 };
 

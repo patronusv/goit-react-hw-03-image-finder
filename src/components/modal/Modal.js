@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import ModalWrapper from './ModalStyled';
 const Modal = ({ largeImageUrl, largeImageAlt, onCloseModal }) => {
   const onEscDown = e => {
     if (e.code === 'Escape') {
@@ -26,11 +27,11 @@ const Modal = ({ largeImageUrl, largeImageAlt, onCloseModal }) => {
   });
 
   return (
-    <div className="Overlay">
+    <ModalWrapper className="Overlay">
       <div className="Modal">
         <img src={largeImageUrl} alt={largeImageAlt} />
       </div>
-    </div>
+    </ModalWrapper>
   );
 };
 
