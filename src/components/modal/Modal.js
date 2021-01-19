@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
 const Modal = ({ largeImageUrl, largeImageAlt, onCloseModal }) => {
   const onEscDown = e => {
-    console.log(e);
     if (e.code === 'Escape') {
       onCloseModal();
     }
   };
   const onBackdropClick = e => {
-    console.log(e);
     if (e.target === e.currentTarget) {
       onCloseModal();
     }
