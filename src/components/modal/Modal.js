@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import ModalWrapper from './ModalStyled';
 const Modal = ({ largeImageUrl, largeImageAlt, onCloseModal }) => {
   const onEscDown = e => {
@@ -36,3 +37,8 @@ const Modal = ({ largeImageUrl, largeImageAlt, onCloseModal }) => {
 };
 
 export default Modal;
+Modal.propTypes = {
+  largeImageUrl: PropTypes.string.isRequired,
+  largeImageAlt: PropTypes.string.isRequired,
+  onCloseModal: PropTypes.func.isRequired,
+};

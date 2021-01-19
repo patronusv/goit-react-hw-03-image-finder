@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ButtonWrapper from './ButtonStyled';
 const Button = ({ onBtnClick, title }) => {
   return (
@@ -11,3 +12,7 @@ const Button = ({ onBtnClick, title }) => {
 };
 
 export default Button;
+Button.propTypes = {
+  onBtnClick: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+};

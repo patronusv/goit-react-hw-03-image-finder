@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ImageListItem from './ImageGalleryItemStyled';
 const ImageGalleryItem = ({ image }) => {
   return (
@@ -9,3 +10,6 @@ const ImageGalleryItem = ({ image }) => {
 };
 
 export default ImageGalleryItem;
+ImageGalleryItem.propTypes = {
+  image: PropTypes.object.isRequired,
+};
