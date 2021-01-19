@@ -1,24 +1,31 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 const Modal = ({ largeImageUrl, largeImageAlt, onCloseModal }) => {
-  const [modalShown, setModalShown] = useState(true);
-  const onEscDown = useCallback(
-    e => {
-      if (e.code === 'Escape') {
-        setModalShown(false);
-        onCloseModal();
-      }
-    },
-    [setModalShown, onCloseModal],
-  );
-  useEffect(() => {
-    if (modalShown) {
-      window.addEventListener('keydown', onEscDown);
-    } else {
-      window.removeEventListener('keydown', onEscDown);
+  const onEscDown = e => {
+    console.log(e);
+    if (e.code === 'Escape') {
+      onCloseModal();
     }
-
-    return () => window.removeEventListener('keydown', onEscDown);
-  }, [modalShown, onEscDown]);
+  };
+  const onBackdropClick = e => {
+    console.log(e);
+    if (e.target === e.currentTarget) {
+      onCloseModal();
+    }
+  };
+  useEffect(() => {
+    window.addEventListener('keydown', onEscDown);
+    return () => {
+      window.removeEventListener('keydown', onEscDown);
+      return () => document.querySelector('.Overlay').removeEventListener('click', onBackdropClick);
+    };
+  });
+  useEffect(() => {
+    document.querySelector('.Overlay').addEventListener('click', onBackdropClick);
+    return () => {
+      window.removeEventListener('keydown', onEscDown);
+      return () => document.querySelector('.Overlay').removeEventListener('click', onBackdropClick);
+    };
+  });
 
   return (
     <div className="Overlay">
