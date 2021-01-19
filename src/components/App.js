@@ -16,6 +16,7 @@ const initialState = {
   largeImageUrl: '',
   largeImageAlt: '',
   isLoading: false,
+  error: null,
 };
 
 const App = () => {
@@ -30,21 +31,37 @@ const App = () => {
       });
     }
   }, [state.page]);
-
+  const resetError = () => {
+    setState(prevState => ({ ...prevState, error: '' }));
+  };
   const getPhotos = async (query, page = 1) => {
-    if (query === '') {
-      return;
+    try {
+      if (query === '') {
+        return;
+      }
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+      resetError();
+      setState(prevState => ({ ...prevState, isLoading: true }));
+      const result = await fetchPhotos(query, page);
+      setState(prevState => ({ ...prevState, images: [...result.data.hits], page: 2, query: query, isLoading: false }));
+    } catch (error) {
+      setState(prevState => ({ ...prevState, error: error }));
     }
-    setState(prevState => ({ ...prevState, isLoading: true }));
-    const result = await fetchPhotos(query, page);
-    setState(prevState => ({ ...prevState, images: [...result.data.hits], page: 2, query: query, isLoading: false }));
   };
 
   const loadMore = async () => {
-    const { query, page } = state;
-    setState(prevState => ({ ...prevState, isLoading: true }));
-    const result = await fetchPhotos(query, page);
-    setState(prevState => ({ ...prevState, images: [...prevState.images, ...result.data.hits], page: prevState.page + 1, isLoading: false }));
+    try {
+      resetError();
+      const { query, page } = state;
+      setState(prevState => ({ ...prevState, isLoading: true }));
+      const result = await fetchPhotos(query, page);
+      setState(prevState => ({ ...prevState, images: [...prevState.images, ...result.data.hits], page: prevState.page + 1, isLoading: false }));
+    } catch (error) {
+      setState(prevState => ({ ...prevState, error: error }));
+    }
   };
 
   const openInModal = e => {
@@ -56,18 +73,18 @@ const App = () => {
     setState(prevState => ({ ...prevState, largeImageUrl: '', largeImageAlt: '', modalIsOpen: false }));
   };
 
-  const { images } = state;
+  const { images, isLoading, modalIsOpen, largeImageUrl, largeImageAlt } = state;
   return (
     <AppStyled>
       <SearchBar onSubmit={getPhotos} />
-      {state.isLoading && (
+      {isLoading && (
         <div className="loader-wrapper">
           <Loader type="Puff" color="#00BFFF" height={100} width={100} timeout={3000} />
         </div>
       )}
       <ImageGallery images={images} openInModal={openInModal} />
       {images.length > 0 && <Button onBtnClick={loadMore} title="Load more" />}
-      {state.modalIsOpen && <Modal largeImageUrl={state.largeImageUrl} largeImageAlt={state.largeImageAlt} onCloseModal={closeModal} />}
+      {modalIsOpen && <Modal largeImageUrl={largeImageUrl} largeImageAlt={largeImageAlt} onCloseModal={closeModal} />}
     </AppStyled>
   );
 };
