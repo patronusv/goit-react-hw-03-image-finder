@@ -6,8 +6,8 @@ const ImageGallery = ({ images, openInModal }) => {
   return (
     <ImageGalleryWrapper>
       <ul className="ImageGallery" onClick={openInModal}>
-        {images.map(item => (
-          <ImageGalleryItem image={item} key={item.id} />
+        {images.map((item, idx) => (
+          <ImageGalleryItem image={item} key={`${item.id}${idx}`} />
         ))}
       </ul>
     </ImageGalleryWrapper>
